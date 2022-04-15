@@ -1,0 +1,10 @@
+(defmacro += (numericValue incrementValue) `(+, numericValue ,incrementValue))
+
+(defmacro iterate (controlVar beginValueExpr endValueExpr incrExpr &rest bodies)
+    ;(let ((endVal endValueExpr) (incVal incrExpr))
+    (let ((endVal (gensym))(incVal (gensym)))
+    `(do ((,incVal ,incrExpr) (,endVal ,endValueExpr) (,controlVar ,beginValueExpr (+= ,controlVar , incVal)))
+         ((> ,controlVar ,endVal) T)
+         ,@ bodies
+     ))
+)
